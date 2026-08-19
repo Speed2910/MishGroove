@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mishgroove - Inicio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link id="favicon" rel="icon" type="image/png" href="icon/Claro/favicon-128x128.png">
+</head>
+<body class="theme-claro">
+
+    <div class="glass-dashboard-container">
+        <aside class="sidebar">
+            <div class="logo-avatar-wrapper">
+                <img src="Images/logo tema claro.png" class="logo-avatar img-claro" alt="Logo Mishgroove" onerror="this.style.display='none'">
+                <img src="Images/logo tema alt.png" class="logo-avatar img-alt" alt="Logo Mishgroove" onerror="this.style.display='none'">
+                <img src="Images/logo tema oscuro.png" class="logo-avatar img-oscuro" alt="Logo Mishgroove" onerror="this.style.display='none'">
+            </div>
+        
+            <nav class="sidebar-nav">
+                <ul class="nav-links">
+                    <li><a href="#sobre-nosotros">
+                        <svg class="nav-svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <span class="nav-text lang" data-es="Sobre Nosotros" data-en="About Us">Sobre Nosotros</span>
+                    </a></li>
+                    <li><a href="#como-funciona">
+                        <svg class="nav-svg-icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        <span class="nav-text lang" data-es="Funcionamiento" data-en="How it Works">Funcionamiento</span>
+                    </a></li>
+                    <li><a href="catalogo.html">
+                        <svg class="nav-svg-icon" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                        <span class="nav-text lang" data-es="Catálogo" data-en="Catalog">Catálogo</span>
+                    </a></li>
+                    <li><a href="#pricing">
+                        <svg class="nav-svg-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span class="nav-text lang" data-es="Planes" data-en="Plans">Planes</span>
+                    </a></li>
+                    <li><a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank" rel="noopener noreferrer">
+                        <svg class="nav-svg-icon" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2A29 29 0 0 0 23 11.75a29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+                        <span class="nav-text">YouTube</span>
+                    </a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-controls-footer">
+                <!-- Controles movidos a la barra de navegación superior -->
+            </div>
+        </aside>
+
+        <main class="cinematic-hero-section">           
+            <div class="hero-background"></div>
+            <div class="hero-wrapper-top"> 
+                <header class="cinematic-navbar-pill">
+                    <div class="pill-left">Mishgroove</div>
+                    <div class="pill-center-controls">
+                        <div class="dropdown-container">
+                            <button class="theme-circle-btn" id="theme-menu-btn" aria-label="Cambiar Tema" title="Cambiar Tema">
+                                <div class="theme-icon-display"></div>
+                            </button>
+                            <div class="dropdown-menu" id="theme-menu">
+                                <div class="dropdown-item" data-theme="0"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle></svg><span>Tema Claro</span></div>
+                                <div class="dropdown-item" data-theme="1"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83"></path></svg><span>Tema Alt</span></div>
+                                <div class="dropdown-item" data-theme="2"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg><span>Tema Oscuro</span></div>
+                            </div>
+                        </div>
+                        <div class="dropdown-container">
+                            <button class="theme-circle-btn" id="lang-menu-btn" style="font-size:10px; font-weight:bold;"><span id="current-lang-text">ES</span></button>
+                            <div class="dropdown-menu" id="lang-menu">
+                                <div class="dropdown-item" data-lang="es">Español (ES)</div>
+                                <div class="dropdown-item" data-lang="en">English (EN)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pill-right-actions">
+                        <button class="btn-pill-sec lang" id="pill-register-trigger" data-es="Registrarse" data-en="Register">Registrarse</button>
+                        <button class="btn-pill-pri lang" id="pill-login-trigger" data-es="Ingresar" data-en="Login">Ingresar</button>
+                    </div>
+                </header>
+                <div class="cinematic-hero-content animate-fade-in" style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <span class="hero-tagline lang" data-es="CONSTRUYE EL FUTURO DEL AUDIO" data-en="BUILD THE AUDIO FUTURE">CONSTRUYE EL FUTURO DEL AUDIO</span>
+                    <h1 class="hero-main-title lang" data-es="Una nueva forma de pensar y crear sonido" data-en="A new way to think and create sound">Una nueva forma de pensar y crear sonido</h1>
+                    <p class="section-desc lang" data-es="Distribución inteligente para creativos y audiófilos." data-en="Smart distribution for creatives and audiophiles.">Distribución inteligente para creativos y audiófilos.</p>
+                </div>
+            </div>
+
+            <section id="sobre-nosotros" class="glass-section animate-fade-in" style="animation-delay: 0.2s;">
+                <h2 class="lang" data-es="Sobre Nosotros" data-en="About Us">Sobre Nosotros</h2>
+                <p class="section-desc lang" data-es="Mishgroove es la central de audio del futuro, diseñada específicamente para artistas independientes, ingenieros de sonido y productoras de alto nivel. Nuestra interfaz permite una gestión técnica y visual inigualable." data-en="Mishgroove is the audio hub of the future, designed specifically for independent artists, sound engineers, and high-level producers.">Mishgroove es la central de audio del futuro, diseñada específicamente para artistas independientes, ingenieros de sonido y productoras de alto nivel. Nuestra interfaz permite una gestión técnica y visual inigualable.</p>
+                
+                <div class="about-grid">
+                    <div class="about-card">
+                        <img src="/imagen index/1.jpg" alt="Misión" style="width: 100%; height: 150px; object-fit: cover; border-radius: 12px; margin-bottom: 15px;">
+                        <h3 class="lang" data-es="Nuestra Misión" data-en="Our Mission">Nuestra Misión</h3>
+                        <p class="lang" data-es="Democratizar la distribución musical ofreciendo herramientas analíticas de grado de ingeniería a cualquier creador, eliminando las barreras técnicas de la industria tradicional." data-en="Democratize music distribution by offering engineering-grade analytical tools to any creator.">Democratizar la distribución musical ofreciendo herramientas analíticas de grado de ingeniería a cualquier creador, eliminando las barreras técnicas de la industria tradicional.</p>
+                    </div>
+                    <div class="about-card">
+                        <img src="/imagen index/2.jpg" alt="Visión" style="width: 100%; height: 150px; object-fit: cover; border-radius: 12px; margin-bottom: 15px;">
+                        <h3 class="lang" data-es="Nuestra Visión" data-en="Our Vision">Nuestra Visión</h3>
+                        <p class="lang" data-es="Ser el ecosistema digital donde la estética visual y la precisión del audio convergen, permitiendo a los artistas centrarse en lo que importa: crear su obra maestra." data-en="To be the digital ecosystem where visual aesthetics and audio precision converge.">Ser el ecosistema digital donde la estética visual y la precisión del audio convergen, permitiendo a los artistas centrarse en lo que importa: crear su obra maestra.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="como-funciona" class="glass-section animate-fade-in" style="animation-delay: 0.4s;">
+                <h2 class="lang" data-es="¿Cómo Funciona?" data-en="How it Works?">¿Cómo Funciona?</h2>
+                <div class="steps-grid">
+                    <div class="step-card hover-lift">
+                        <img src="/imagen index/3.jpg" alt="Sube tu arte" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                        <span class="step-number">1</span>
+                        <h4 class="lang" data-es="Sube tu Arte" data-en="Upload Art">Sube tu Arte</h4>
+                        <p class="lang" data-es="Usa nuestro estudio estilo Amuse para arrastrar tus archivos Master y configurar los metadatos." data-en="Use our Amuse-style studio to drag your Master files and configure metadata.">Usa nuestro estudio estilo Amuse para arrastrar tus archivos Master y configurar los metadatos.</p>
+                    </div>
+                    <div class="step-card hover-lift">
+                        <img src="/imagen index/4.jpg" alt="Validación" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                        <span class="step-number">2</span>
+                        <h4 class="lang" data-es="Validación" data-en="Validation">Validación</h4>
+                        <p class="lang" data-es="Nuestro equipo de administradores revisa la calidad de audio y derechos de autor rápidamente." data-en="Our admin team reviews audio quality and copyright quickly.">Nuestro equipo de administradores revisa la calidad de audio y derechos de autor rápidamente.</p>
+                    </div>
+                    <div class="step-card hover-lift">
+                        <img src="/imagen index/5.jpg" alt="Monetiza" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                        <span class="step-number">3</span>
+                        <h4 class="lang" data-es="Monetiza" data-en="Monetize">Monetiza</h4>
+                        <p class="lang" data-es="Tu música llega al catálogo global. Accede a gráficas detalladas si eres usuario Pro o Signature." data-en="Your music hits the global catalog. Access detailed charts if Pro or Signature.">Tu música llega al catálogo global. Accede a gráficas detalladas si eres usuario Pro o Signature.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="features" class="glass-section animate-fade-in" style="animation-delay: 0.6s;">
+                <h2 class="lang" data-es="Artistas Top" data-en="Top Artists">Artistas Top</h2>
+                <div class="features-grid">
+                    <div class="artist-card">
+                        <img src="https://images.unsplash.com/photo-1584679109597-c686d939223d?w=200" alt="Neon Pulse">
+                        <h3 class="lang" data-es="Neon Pulse" data-en="Neon Pulse">Neon Pulse</h3>
+                        <p class="lang" data-es="Pioneros en la síntesis granular y ritmos envolventes." data-en="Pioneers in granular synthesis.">Pioneros en la síntesis granular y ritmos envolventes.</p>
+                        <div class="artist-stats">
+                            <div><strong>120K</strong><br>Oyentes</div>
+                            <div><strong style="color: var(--btn-primary-start);">Signature</strong><br>Status</div>
+                        </div>
+                    </div>
+                    <div class="artist-card">
+                        <img src="https://images.unsplash.com/photo-1507214152479-793a86c026a7?w=200" alt="The Velvet Sounds">
+                        <h3 class="lang" data-es="The Velvet Sounds" data-en="The Velvet Sounds">The Velvet Sounds</h3>
+                        <p class="lang" data-es="Guitarras orgánicas fusionadas con procesos digitales." data-en="Organic guitars fused with digital processes.">Guitarras orgánicas fusionadas con procesos digitales.</p>
+                        <div class="artist-stats">
+                            <div><strong>85K</strong><br>Oyentes</div>
+                            <div><strong>Pro</strong><br>Status</div>
+                        </div>
+                    </div>
+                    <div class="artist-card">
+                        <img src="https://images.unsplash.com/photo-1559466193-6157500a87e0?w=200" alt="Echoes of Jupiter">
+                        <h3 class="lang" data-es="Echoes of Jupiter" data-en="Echoes of Jupiter">Echoes of Jupiter</h3>
+                        <p class="lang" data-es="Narrativas cinematográficas traducidas a frecuencias bajas." data-en="Cinematic narratives translated to low frequencies.">Narrativas cinematográficas traducidas a frecuencias bajas.</p>
+                        <div class="artist-stats">
+                            <div><strong>210K</strong><br>Oyentes</div>
+                            <div><strong style="color: var(--btn-primary-start);">Signature</strong><br>Status</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="pricing" class="glass-section">
+                <h2 class="lang" data-es="Elige tu Camino" data-en="Choose your Path">Elige tu Camino</h2>
+                <p class="bcv-rate lang" data-es="Tasa BCV referencial: 617.63 VES/USD" data-en="Reference BCV Rate: 617.63 VES/USD">Tasa BCV referencial: 617.63 VES/USD</p>
+                <div class="pricing-grid">
+                    <div class="pricing-card hover-lift">
+                        <h3>Plan Essential</h3>
+                        <h4 class="lang" data-es="Gratis" data-en="Free">Gratis</h4>
+                        <p class="lang" data-es="Sube tu música al catálogo global. Estadísticas bloqueadas." data-en="Upload music to global catalog. Stats locked.">Sube tu música al catálogo global. Estadísticas y reservas bloqueadas.</p>
+                    </div>
+                    <div class="pricing-card hover-lift" style="border-color: var(--btn-primary-start); box-shadow: 0 0 20px var(--btn-primary-shadow);">
+    <h3 style="color: var(--btn-primary-start);">Plan Pro</h3>
+                        <h4>$8 / mes</h4>
+                        <p class="lang" data-es="Estadísticas detalladas, reservas de estudio, gráficas en tiempo real." data-en="Detailed stats, real-time charts, featured profile.">Estadísticas detalladas, reservas de estudio, gráficas en tiempo real.</p>
+                    </div>
+                    <div class="pricing-card hover-lift">
+                        <h3>Plan Signature</h3>
+                        <h4 class="lang" data-es="Solo por Petición" data-en="Request Only">Solo por Petición</h4>
+                        <p class="lang" data-es="Monetización total, soporte prioritario, auditoría de métricas." data-en="Full monetization, priority support, metrics audit.">Monetización total, soporte prioritario, auditoría de métricas.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modales de login permanecen igual -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal-content login-dashboard-layout">
+            <button class="close-btn" id="close-login-btn">&times;</button>
+            <div class="login-media-side">
+                <!-- El contenido de texto ahora tiene su propio contenedor con efecto glass -->
+                <div class="login-media-content">
+                    <span class="trending-badge">MISHGROOVE STUDIO</span>
+                    <h3 class="lang" data-es="Espacio Creativo" data-en="Creative Space">Espacio Creativo</h3>
+                    <p class="lang" data-es="Distribución inteligente para el artista moderno." data-en="Smart distribution for the modern artist.">Distribución inteligente para el artista moderno.</p>
+                </div>
+            </div>
+            
+            <div class="login-form-side">
+                <div class="form-wrapper active" id="login-view">
+                    <div class="form-side-header">
+                        <h2 class="lang" data-es="Iniciar Sesión" data-en="Sign In">Iniciar Sesión</h2>
+                    </div>
+                    <form id="login-form" style="margin-top:20px;">
+                        <div class="input-wrapper" style="margin-bottom: 12px;">
+                            <input type="email" id="login-email" placeholder="Correo" required>
+                        </div>
+                        <div class="input-wrapper" style="margin-bottom: 15px;">
+                            <input type="password" id="login-password" placeholder="Contraseña" required>
+                        </div>
+                        <button type="submit" class="btn-submit lang" data-es="Ingresar" data-en="Enter">Ingresar</button>
+                    </form>
+                    <p class="switch-form-text lang" data-es="¿No tienes cuenta? " data-en="No account? ">¿No tienes cuenta? <a href="#" id="go-to-register">Regístrate</a></p>
+                </div>
+
+                <div class="form-wrapper" id="register-view">
+                    <div class="form-side-header">
+                        <h2 class="lang" data-es="Crear Cuenta" data-en="Create Account">Crear Cuenta</h2>
+                    </div>
+                    <div class="role-selector" id="reg-role-selector" style="margin-top:15px; margin-bottom: 10px;">
+                        <div class="role-card active" data-role="cliente-np"><p>Essential (Gratis)</p></div>
+                        <div class="role-card" data-role="cliente-p"><p>Pro ($8)</p></div>
+                    </div>
+                    <form id="register-form">
+                        <div class="input-wrapper" style="margin-bottom: 10px;">
+                            <input type="text" id="reg-name" placeholder="Nombre completo" required>
+                        </div>
+                        <div class="input-wrapper" style="margin-bottom: 10px;">
+                            <input type="email" id="reg-email" placeholder="Correo electrónico" required>
+                        </div>
+                        <div class="input-wrapper" style="margin-bottom: 10px;">
+                            <label for="reg-dob" style="font-size: 11px; font-weight: bold; display: block; margin-bottom: 5px;" class="lang" data-es="Fecha de Nacimiento" data-en="Date of Birth">Fecha de Nacimiento</label>
+                            <input type="date" id="reg-dob" required>
+                        </div>
+                        <div id="payment-fields" style="display: none;">
+                            <p style="font-size:11px; margin-bottom:8px; font-weight:bold;">Suscripción Pro: $8 (Aprox 4.941,04 VES)</p>
+                            <div class="payment-grid">
+                                <input type="text" placeholder="Titular de la tarjeta" class="col-span-2">
+                                <input type="text" placeholder="Número de Tarjeta (16 dígitos)" class="col-span-2" maxlength="16">
+                                <input type="text" placeholder="MM/AA" maxlength="5">
+                                <input type="text" placeholder="CVV" maxlength="3">
+                            </div>
+                        </div>
+                        <div class="input-wrapper" style="margin-bottom: 15px;">
+                            <input type="password" id="reg-password" placeholder="Contraseña segura" required>
+                        </div>
+                        <button type="submit" class="btn-submit lang" data-es="Crear cuenta" data-en="Create Account">Crear cuenta</button>
+                    </form>
+                    <p class="switch-form-text lang" data-es="¿Ya eres miembro? " data-en="Already a member? ">¿Ya eres miembro? <a href="#" id="go-to-login">Inicia sesión</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

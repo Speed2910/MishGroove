@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mishgroove - Catálogo Global</title>
+    <link rel="stylesheet" href="styles.css">
+    <link id="favicon" rel="icon" type="image/png" href="icon/Claro/favicon-128x128.png">
+</head>
+<body class="theme-claro">
+
+    <div class="glass-dashboard-container">
+        <aside class="sidebar">
+            <div class="logo-avatar-wrapper">
+                <img src="Images/logo tema claro.png" class="logo-avatar img-claro" alt="Logo Mishgroove" onerror="this.style.display='none'">
+                <img src="Images/logo tema alt.png" class="logo-avatar img-alt" alt="Logo Mishgroove" onerror="this.style.display='none'">
+                <img src="Images/logo tema oscuro.png" class="logo-avatar img-oscuro" alt="Logo Mishgroove" onerror="this.style.display='none'">
+            </div>
+        
+            <nav class="sidebar-nav">
+                <ul class="nav-links">
+                    <li><a href="index.html">
+                        <svg class="nav-svg-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span class="nav-text lang" data-es="Inicio" data-en="Home">Inicio</span>
+                    </a></li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-controls-footer">
+                <div class="dropdown-container">
+                    <button class="theme-circle-btn" id="theme-menu-btn">
+                        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle></svg>
+                        <svg class="icon-spark" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83"></path></svg>
+                        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </button>
+                    <div class="dropdown-menu" id="theme-menu">
+                        <div class="dropdown-item" data-theme="0"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle></svg> Claro</div>
+                        <div class="dropdown-item" data-theme="1"><svg viewBox="0 0 24 24"><path d="M12 2v4M12 18v4"></path></svg> Alt</div>
+                        <div class="dropdown-item" data-theme="2"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> Oscuro</div>
+                    </div>
+                </div>
+
+                <div class="dropdown-container">
+                    <button class="theme-circle-btn" id="lang-menu-btn" style="font-size:10px; font-weight:bold;">ES</button>
+                    <div class="dropdown-menu" id="lang-menu">
+                        <div class="dropdown-item" data-lang="es">ES</div>
+                        <div class="dropdown-item" data-lang="en">EN</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="db-main-content" style="padding-top:40px;">
+            <header class="db-topbar" style="border:none;">
+                <div class="topbar-welcome"><h1 class="lang" data-es="Catálogo Global" data-en="Global Catalog">Catálogo Global</h1></div>
+            </header>
+            <p style="font-size: 14px; opacity:0.8; max-width:800px; margin-top:-10px;" class="lang" data-es="Descubre y escucha las pistas públicas de nuestra comunidad de artistas." data-en="Discover and listen to public tracks from our artist community.">Descubre y escucha las pistas públicas de nuestra comunidad de artistas.</p>
+            
+            <div class="catalog-grid" id="public-catalog-list" style="margin: 30px 0; max-width:100%;">
+                </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

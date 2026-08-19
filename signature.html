@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mishgroove - Plan Signature</title>
+    <link rel="stylesheet" href="styles.css">
+    <link id="favicon" rel="icon" type="image/png" href="icon/Claro/favicon-128x128.png">
+    <!-- Librería Chart.js para gráficas dinámicas de Insights Financieros -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="theme-alt">
+    <div class="glass-dashboard-container">
+        <aside class="db-sidebar">
+            <div class="db-brand"><span class="brand-logo" style="color:#a855f7;">✦</span><span class="brand-name">Mishgroove+</span></div>
+            <nav class="db-menu">
+                <button class="menu-item tab-trigger" data-target="view-reservations">
+                    <span>Reservar Estudio</span>
+                </button>
+                <button class="menu-item tab-trigger" data-target="view-support">
+                    <span>Soporte VIP</span>
+                </button>
+                <p class="menu-category">Estudio</p>
+                <button class="menu-item active tab-trigger" data-target="view-stats">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"></rect></svg>
+                    <span>Insights Financieros</span>
+                </button>
+                <button class="menu-item tab-trigger" data-target="view-upload">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                    <span>Subir Master</span>
+                </button>
+                <button class="menu-item tab-trigger" data-target="view-catalog">
+                    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle></svg>
+                    <span>Mi Catálogo</span>
+                </button>
+                <p class="menu-category">Cuenta</p>
+                <button class="menu-item tab-trigger" data-target="view-settings">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg>
+                    <span>Ajustes</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-controls-footer">
+                <div class="dropdown-container">
+                    <button class="theme-circle-btn" id="theme-menu-btn"><svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle></svg></button>
+                    <div class="dropdown-menu" id="theme-menu">
+                        <div class="dropdown-item" data-theme="0">Claro</div>
+                        <div class="dropdown-item" data-theme="1">Alt</div>
+                        <div class="dropdown-item" data-theme="2">Oscuro</div>
+                    </div>
+                </div>
+                <div class="dropdown-container">
+                    <button class="theme-circle-btn" id="lang-menu-btn" style="font-size:10px; font-weight:bold;">ES</button>
+                    <div class="dropdown-menu" id="lang-menu">
+                        <div class="dropdown-item" data-lang="es">ES</div>
+                        <div class="dropdown-item" data-lang="en">EN</div>
+                    </div>
+                </div>
+                <button class="logout-btn-text lang" data-es="Cerrar Sesión" data-en="Logout" style="background:none; border:none; padding:0; margin-top:5px;">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="db-main-content">
+        
+            <header class="db-topbar">
+                <div class="topbar-welcome"><h1 id="user-greeting">Artist Insights</h1></div>
+                <div class="user-avatar-badge">
+                    <div class="avatar-circle premium-colored" id="profile-pic-display">✦</div>
+                    <span class="user-role-label">Signature Creator</span>
+                </div>
+            </header>
+
+            <!-- Vista de Soporte Chat -->
+            <div id="view-support" class="dashboard-view">
+                <h2>Asistente / Reclamos</h2>
+                <div id="user-claims-list" class="chat-container"></div>
+                <form id="claim-form" style="display:flex; gap:10px; margin-top:10px;">
+                    <input type="text" id="claim-text" placeholder="Escribe tu consulta o reclamo..." style="flex-grow:1; padding:10px; border-radius:8px; border:1px solid var(--glass-border); background:var(--input-bg); color:var(--invert-text);" required>
+                    <button type="submit" class="btn-submit" style="width:auto;">Enviar</button>
+                </form>
+            </div>
+
+            <!-- Vista de Reservas y Carrito con Calendario -->
+            <div id="view-reservations" class="dashboard-view">
+                <h2>Catálogo de Estudios e Instrumentos</h2>
+                <div class="catalog-grid" id="services-catalog-list"></div>
+                
+                <div class="cart-container">
+                    <h3>Tu Reserva</h3>
+                    <div id="user-cart-items"></div>
+                    <div class="input-wrapper" style="margin-top:15px; margin-bottom:15px;">
+                        <label style="font-size:12px; font-weight:bold; display:block; margin-bottom:5px;">Selecciona el día de reserva:</label>
+                        <input type="date" id="reservation-date" required style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--glass-border); background:var(--input-bg); color:var(--text-color);">
+                    </div>
+                    <div id="user-cart-total" class="cart-total">Total: $0</div>
+                    <button id="checkout-btn" class="btn-submit" style="margin-top:15px;">Confirmar Reserva</button>
+                </div>
+            </div>
+
+            <!-- Vista de Insights Financieros e Indicadores -->
+            <div id="view-stats" class="dashboard-view active">
+                <div class="stats-header-bar">
+                    <h2>Insights Financieros & Monetización</h2>
+                    <span class="live-badge">🔴 En Vivo</span>
+                </div>
+
+                <section class="db-metrics-grid">
+                    <div class="metric-card violet-gradient">
+                        <div class="card-head">Ingresos Estimados Totales</div>
+                        <h2 id="stats-revenue">$0.00</h2>
+                        <span class="metric-subtext">+$0.005 USD por reproducción</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-head">Escuchas Monetizadas</div>
+                        <h2 id="stats-listens">0</h2>
+                        <span class="metric-subtext">Reproducciones confirmadas</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-head">RPM Promedio</div>
+                        <h2 id="stats-rpm">$5.00</h2>
+                        <span class="metric-subtext">Ingreso estimado por 1,000 reproducciones</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-head">Alcance / Crecimiento</div>
+                        <h2 id="stats-reach">0%</h2>
+                        <span class="metric-subtext">Crecimiento de catálogo activo</span>
+                    </div>
+                </section>
+
+                <!-- Gráficas Interactivas con Chart.js -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <h3>Evolución de Ingresos Semanales ($)</h3>
+                            <span class="chart-period">Últimos 7 días</span>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="signature-financial-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <h3>Distribución de Ingresos por Canción</h3>
+                            <span class="chart-period">Top Pistas</span>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="signature-revenue-donut"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Desglose Financiero -->
+                <div class="financial-breakdown-section">
+                    <h3>Desglose Detallado por Pista</h3>
+                    <div class="table-responsive">
+                        <table class="financial-table">
+                            <thead>
+                                <tr>
+                                    <th>Pista</th>
+                                    <th>Género</th>
+                                    <th>Escuchas</th>
+                                    <th>Tarifa (USD/Play)</th>
+                                    <th>Ingresos Generados</th>
+                                    <th>Estado Royalty</th>
+                                </tr>
+                            </thead>
+                            <tbody id="signature-financial-table-body">
+                                <tr>
+                                    <td colspan="6" style="text-align:center;">Cargando métricas de tu catálogo...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-upload" class="dashboard-view">
+                <h2>Subir Master (Monetización Directa)</h2>
+                <div class="upload-zone" id="drop-zone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                    <p>Arrastra tu Master. La monetización se activa al aprobarse.</p>
+                    <input type="file" id="track-file" accept="audio/*" style="display:none;">
+                </div>
+                <form class="upload-form" id="upload-track-form">
+                    <div class="input-wrapper"><label>Título</label><input type="text" id="track-title" required></div>
+                    <div class="input-wrapper"><label>Género</label><select id="track-genre"><option>Electrónica</option><option>Rock</option><option>Cinematic</option><option>Urbano</option></select></div>
+                    <div class="input-wrapper checkbox-wrapper" style="margin-top:5px;">
+                        <input type="checkbox" id="track-public" checked>
+                        <label for="track-public">Hacer público en el catálogo global</label>
+                    </div>
+                    <button type="submit" class="btn-submit">Subir y Distribuir</button>
+                </form>
+            </div>
+
+            <div id="view-catalog" class="dashboard-view">
+                <h2 class="lang" data-es="Mi Catálogo Monetizado" data-en="My Monetized Catalog">Mi Catálogo Monetizado</h2>
+                <div id="user-track-list" class="catalog-grid" style="max-width:100%; margin-top:10px;"></div>
+            </div>
+
+            <div id="view-settings" class="dashboard-view">
+                <div class="upload-form" style="max-width:400px;">
+                    <h3>Cambiar Foto de Perfil</h3>
+                    <input type="file" id="profile-pic-input" accept="image/*">
+                    <button class="btn-table-action" id="save-pic-btn" style="margin-top:10px;">Guardar Foto</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

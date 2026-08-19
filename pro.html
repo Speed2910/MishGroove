@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mishgroove - Plan Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link id="favicon" rel="icon" type="image/png" href="icon/Claro/favicon-128x128.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="theme-claro">
+    <div class="glass-dashboard-container">
+        <aside class="db-sidebar">
+            <div class="db-brand"><span class="brand-logo" style="color:#a855f7;">●</span><span class="brand-name">Mishgroove</span></div>
+            <nav class="db-menu">
+                <button class="menu-item tab-trigger" data-target="view-reservations">
+                    <span>Reservar Estudio</span>
+                </button>
+                <button class="menu-item tab-trigger" data-target="view-support">
+                    <span>Soporte VIP</span>
+                </button>
+                <p class="menu-category lang" data-es="Estudio" data-en="Studio">Estudio</p>
+                <button class="menu-item active tab-trigger" data-target="view-stats">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    <span>Estadísticas PRO</span>
+                </button>
+                <button class="menu-item tab-trigger" data-target="view-upload">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                    <span>Subir Música</span>
+                </button>
+                <button class="menu-item tab-trigger" data-target="view-catalog">
+                    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                    <span class="lang" data-es="Mi Catálogo" data-en="My Catalog">Mi Catálogo</span>
+                </button>
+                <button class="menu-item tab-trigger" data-target="view-tools">
+                    <svg viewBox="0 0 24 24"><path d="M3 16.5v-3l8-8 3 3-8 8h-3zM18 7.5l3 3-8 8h-3v-3l8-8z"></path></svg>
+                    <span>Herramientas</span>
+                </button>
+                <p class="menu-category lang" data-es="Cuenta" data-en="Account">Cuenta</p>
+                <button class="menu-item tab-trigger" data-target="view-settings">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15..."></path></svg>
+                    <span>Ajustes</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-promo-card">
+                <div class="promo-icon">✦</div>
+                <h4>Solicitar Signature</h4>
+                <p style="font-size:11px;">Monetización avanzada.</p>
+                <button class="btn-promo-upgrade tab-trigger" data-target="view-request-plus">Aplicar</button>
+            </div>
+            
+            <div class="sidebar-controls-footer">
+                <div class="dropdown-container">
+                    <button class="theme-circle-btn" id="theme-menu-btn" aria-label="Cambiar Tema">
+                        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle></svg>
+                    </button>
+                    <!-- Menú con colores y SVG específicos añadidos -->
+                    <div class="dropdown-menu" id="theme-menu">
+                        <div class="dropdown-item" data-theme="0"><svg viewBox="0 0 24 24" style="width:14px; margin-right:5px; fill:none; stroke:currentColor; stroke-width:2;"><circle cx="12" cy="12" r="5"></circle></svg> Claro</div>
+                        <div class="dropdown-item" data-theme="1"><svg viewBox="0 0 24 24" style="width:14px; margin-right:5px; fill:none; stroke:currentColor; stroke-width:2;"><path d="M12 2v4M12 18v4"></path></svg> Alt</div>
+                        <div class="dropdown-item" data-theme="2"><svg viewBox="0 0 24 24" style="width:14px; margin-right:5px; fill:none; stroke:currentColor; stroke-width:2;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg> Oscuro</div>
+                    </div>
+                </div>
+                <div class="dropdown-container">
+                    <button class="theme-circle-btn" id="lang-menu-btn" style="font-size:10px; font-weight:bold;">ES</button>
+                    <div class="dropdown-menu" id="lang-menu">
+                        <div class="dropdown-item" data-lang="es">ES</div>
+                        <div class="dropdown-item" data-lang="en">EN</div>
+                    </div>
+                </div>
+                <button class="logout-btn-text lang" data-es="Cerrar Sesión" data-en="Logout" style="background:none; border:none; padding:0; margin-top:5px;">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="db-main-content">
+
+            <header class="db-topbar">
+                <div class="topbar-welcome"><h1 id="user-greeting">Dashboard Pro</h1></div>
+                <div class="user-avatar-badge">
+                    <div class="avatar-circle premium-colored" id="profile-pic-display" style="background:#3b82f6;">P</div>
+                    <span class="user-role-label">Plan Pro</span>
+                </div>
+            </header>
+
+            <!-- Vista de Soporte Chat -->
+            <div id="view-support" class="dashboard-view">
+                <h2>Asistente / Reclamos</h2>
+                <div id="user-claims-list" class="chat-container"></div>
+                <form id="claim-form" style="display:flex; gap:10px; margin-top:10px;">
+                    <input type="text" id="claim-text" placeholder="Escribe tu consulta o reclamo..." style="flex-grow:1; padding:10px; border-radius:8px; border:1px solid var(--glass-border); background:var(--input-bg); color:var(--invert-text);" required>
+                    <button type="submit" class="btn-submit" style="width:auto;">Enviar</button>
+                </form>
+            </div>
+
+            <!-- Vista de Reservas y Carrito -->
+            <div id="view-reservations" class="dashboard-view">
+                <h2>Catálogo de Estudios e Instrumentos</h2>
+                <div class="catalog-grid" id="services-catalog-list"></div>
+                
+                <div class="cart-container">
+                    <h3>Tu Reserva</h3>
+                    <div id="user-cart-items"></div>
+                    <div id="user-cart-total" class="cart-total">Total: $0</div>
+                    <button id="checkout-btn" class="btn-submit" style="margin-top:15px; background:var(--btn-primary-start);">Confirmar Reserva</button>
+                </div>
+            </div>
+
+            <!-- Panel de Estadísticas Avanzadas (Mismas funciones de Signature adaptadas) -->
+            <div id="view-stats" class="dashboard-view active">
+                <div class="stats-header-bar">
+                    <h2>Insights Financieros & Estadísticas</h2>
+                    <span class="live-badge">📊 Módulo Pro</span>
+                </div>
+
+                <section class="db-metrics-grid">
+                    <div class="metric-card" style="border-left:4px solid #3b82f6; background:linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);">
+                        <div class="card-head">Ingresos Estimados Totales</div>
+                        <h2 id="stats-revenue">$0.00</h2>
+                        <span class="metric-subtext">+$0.005 USD por reproducción</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-head">Escuchas Monetizadas</div>
+                        <h2 id="stats-listens">0</h2>
+                        <span class="metric-subtext">Reproducciones confirmadas</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-head">RPM Promedio</div>
+                        <h2 id="stats-rpm">$5.00</h2>
+                        <span class="metric-subtext">Ingreso estimado por 1,000 reproducciones</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-head">Alcance / Seguidores</div>
+                        <h2 id="stats-followers">0</h2>
+                        <span class="metric-subtext">Crecimiento (<span id="stats-reach">0%</span>)</span>
+                    </div>
+                </section>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <h3>Evolución de Ingresos Semanales ($)</h3>
+                            <span class="chart-period">Últimos 7 días</span>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="pro-financial-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <h3>Distribución de Ingresos por Canción</h3>
+                            <span class="chart-period">Top Pistas</span>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="pro-revenue-donut"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="financial-breakdown-section">
+                    <h3>Desglose Detallado</h3>
+                    <div class="table-responsive">
+                        <table class="financial-table">
+                            <thead>
+                                <tr>
+                                    <th>Pista</th>
+                                    <th>Género</th>
+                                    <th>Reproducciones</th>
+                                    <th>Tarifa Base</th>
+                                    <th>Generado</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pro-financial-table-body">
+                                <tr>
+                                    <td colspan="6" style="text-align:center;">Cargando datos...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-upload" class="dashboard-view">
+                <h2>Subir Nueva Pista (Alta Calidad)</h2>
+                <div class="upload-zone" id="drop-zone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                    <p>Arrastra tu Master HQ o haz clic</p>
+                    <input type="file" id="track-file" accept="audio/*" style="display:none;">
+                </div>
+                <form class="upload-form" id="upload-track-form">
+                    <div class="input-wrapper"><label>Título de la Pista</label><input type="text" id="track-title" required></div>
+                    <div class="input-wrapper"><label>Género</label><select id="track-genre"><option>Electrónica</option><option>Rock</option><option>Cinematic</option></select></div>
+                    <div class="input-wrapper checkbox-wrapper" style="margin-top:5px;">
+                        <input type="checkbox" id="track-public" checked>
+                        <label for="track-public">Hacer público en el catálogo global</label>
+                    </div>
+                    <button type="submit" class="btn-submit" style="background:var(--btn-primary-start);">Enviar a Revisión</button>
+                </form>
+            </div>
+
+            <div id="view-catalog" class="dashboard-view">
+                <h2 class="lang" data-es="Mi Catálogo" data-en="My Catalog">Mi Catálogo</h2>
+                <div id="user-track-list" class="catalog-grid" style="max-width:100%; margin-top:10px;"></div>
+            </div>
+
+            <!-- Vista de Herramientas/Descargas -->
+            <div id="view-tools" class="dashboard-view">
+                <h2>Herramientas Adicionales</h2>
+                <div class="upload-form" style="max-width:500px;">
+                    <h3>Descargar Metrónomo MTM</h3>
+                    <p style="font-size:14px; margin-bottom:20px;">Descarga nuestro metrónomo de escritorio para mantener el tempo perfecto en tus sesiones.</p>
+                    <a href="mtm/mtm.exe" download="mtm.exe" class="btn-submit" style="text-decoration: none; text-align: center; display: block;">Descargar MTM (.exe)</a>
+                </div>
+            </div>
+
+            <div id="view-request-plus" class="dashboard-view">
+                <h2>Cuestionario de Verificación Signature</h2>
+                <form class="upload-form" id="plus-request-form">
+                    <div class="input-wrapper"><label>Fecha de Nacimiento (+18)</label><input type="date" id="req-dob" required></div>
+                    <div class="input-wrapper"><label>Tipo de música / Género</label><input type="text" id="req-music-type" required></div>
+                    <div class="input-wrapper"><label>Muestra Musical (Link/Drive)</label><input type="url" id="req-link" placeholder="https://..." required></div>
+                    <div class="input-wrapper"><label>Metas y Objetivos</label><textarea id="req-reason" rows="4" placeholder="¿Qué buscas con nosotros?" required></textarea></div>
+                    <button type="submit" class="btn-submit" style="background:var(--btn-primary-start);">Enviar Solicitud a Admin</button>
+                </form>
+            </div>
+
+            <div id="view-settings" class="dashboard-view">
+                <h2>Ajustes</h2>
+                <div class="upload-form" style="max-width:400px;">
+                    <h3>Cambiar Foto de Perfil</h3>
+                    <input type="file" id="profile-pic-input" accept="image/*">
+                    <button class="btn-table-action" id="save-pic-btn" style="margin-top:10px;">Guardar Foto</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

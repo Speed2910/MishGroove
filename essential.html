@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mishgroove - Plan Essential</title>
+    <link rel="stylesheet" href="styles.css">
+    <link id="favicon" rel="icon" type="image/png" href="icon/Claro/favicon-128x128.png">
+</head>
+<body class="theme-claro">
+    <div class="glass-dashboard-container">
+        <aside class="db-sidebar">
+            <div class="db-brand"><span class="brand-logo">●</span><span class="brand-name">Mishgroove</span></div>
+            <nav class="db-menu">
+                <button class="menu-item tab-trigger" data-target="view-reservations"><span>Reservar Estudio</span></button>
+                <p class="menu-category lang" data-es="Estudio" data-en="Studio">Estudio</p>
+                <button class="menu-item active tab-trigger" data-target="view-stats">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    <span class="lang" data-es="Estadísticas" data-en="Stats">Estadísticas</span>
+                </button>
+                <button class="menu-item tab-trigger" data-target="view-upload">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                    <span class="lang" data-es="Subir Música" data-en="Upload Music">Subir Música</span>
+                </button>
+                <button class="menu-item tab-trigger" data-target="view-catalog">
+                    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                    <span class="lang" data-es="Mi Catálogo" data-en="My Catalog">Mi Catálogo</span>
+                </button>
+                <p class="menu-category lang" data-es="Cuenta" data-en="Account">Cuenta</p>
+                <button class="menu-item tab-trigger" data-target="view-settings">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15..."></path></svg>
+                    <span class="lang" data-es="Ajustes" data-en="Settings">Ajustes</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-promo-card">
+                <div class="promo-icon">✦</div>
+                <h4 class="lang" data-es="Actualiza a Pro" data-en="Upgrade to Pro">Actualiza a Pro</h4>
+                <button class="btn-promo-upgrade tab-trigger" data-target="view-settings" class="lang" data-es="Mejorar (8$)" data-en="Upgrade ($8)">Mejorar (8$)</button>
+            </div>
+            
+            <div class="sidebar-controls-footer">
+                <div class="dropdown-container">
+                    <button class="theme-circle-btn" id="theme-menu-btn"><svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle></svg></button>
+                    <div class="dropdown-menu" id="theme-menu">
+                        <div class="dropdown-item" data-theme="0">Claro</div>
+                        <div class="dropdown-item" data-theme="1">Alt</div>
+                        <div class="dropdown-item" data-theme="2">Oscuro</div>
+                    </div>
+                </div>
+                <div class="dropdown-container">
+                    <button class="theme-circle-btn" id="lang-menu-btn" style="font-size:10px; font-weight:bold;">ES</button>
+                    <div class="dropdown-menu" id="lang-menu">
+                        <div class="dropdown-item" data-lang="es">ES</div>
+                        <div class="dropdown-item" data-lang="en">EN</div>
+                    </div>
+                </div>
+                <button class="logout-btn-text lang" data-es="Cerrar Sesión" data-en="Logout" style="background:none; border:none; padding:0; margin-top:5px;">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="db-main-content">
+            <header class="db-topbar">
+                <div class="topbar-welcome"><h1 id="user-greeting">Hola, Usuario</h1></div>
+                <div class="user-avatar-badge">
+                    <div class="avatar-circle" id="profile-pic-display">N</div>
+                    <span class="user-role-label">Plan Essential</span>
+                </div>
+            </header>
+
+            <div id="view-reservations" class="dashboard-view">
+                <div style="position:relative;">
+                    <!-- Overlay de bloqueo -->
+                    <div class="locked-overlay">
+                        <svg viewBox="0 0 24 24" style="width:40px; height:40px; margin-bottom:10px; fill:none; stroke:currentColor; stroke-width:2;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <h3 class="lang" data-es="Reservas Bloqueadas" data-en="Reservations Locked">Reservas Bloqueadas</h3>
+                        <p style="font-size:12px; margin-bottom:15px;" class="lang" data-es="Mejora a Pro para poder reservar estudios e instrumentos de nuestro catálogo." data-en="Upgrade to Pro to reserve studios and gear.">Mejora a Pro para poder reservar estudios e instrumentos de nuestro catálogo.</p>
+                        <button class="btn-table-action btn-success tab-trigger" data-target="view-settings">Mejorar Plan</button>
+                    </div>
+                    
+                    <!-- Contenido desenfocado y desactivado -->
+                    <div style="filter: blur(5px); pointer-events: none; user-select: none;">
+                        <h2>Catálogo de Estudios e Instrumentos</h2>
+                        <div class="catalog-grid" id="services-catalog-list"></div>
+                        <div class="cart-container">
+                            <h3>Tu Reserva</h3>
+                            <div id="user-cart-items"></div>
+                            <div id="user-cart-total" class="cart-total">Total: $0</div>
+                            <button id="checkout-btn" class="btn-submit" style="margin-top:15px;">Confirmar y Pagar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="view-stats" class="dashboard-view active">
+                <div style="position:relative;">
+                    <div class="locked-overlay">
+                        <svg viewBox="0 0 24 24" style="width:40px; height:40px; margin-bottom:10px; fill:none; stroke:currentColor; stroke-width:2;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <h3 class="lang" data-es="Estadísticas Bloqueadas" data-en="Locked Stats">Estadísticas Bloqueadas</h3>
+                        <p style="font-size:12px; margin-bottom:15px;" class="lang" data-es="Mejora a Pro para ver análisis detallados." data-en="Upgrade to Pro for analytics.">Mejora a Pro para ver análisis detallados.</p>
+                        <button class="btn-table-action btn-success tab-trigger" data-target="view-settings">Mejorar Plan</button>
+                    </div>
+                    
+                    <section class="db-metrics-grid" style="filter: blur(4px);">
+                        <div class="metric-card"><div class="card-head">Escuchas</div><h2 id="stats-listens">0</h2></div>
+                        <div class="metric-card"><div class="card-head">Seguidores</div><h2 id="stats-followers">0</h2></div>
+                        <div class="metric-card"><div class="card-head">Crecimiento</div><h2 id="stats-reach">0%</h2></div>
+                    </section>
+                </div>
+            </div>
+
+            <div id="view-upload" class="dashboard-view">
+                <h2 class="lang" data-es="Subir Nueva Pista" data-en="Upload New Track">Subir Nueva Pista</h2>
+                <div class="upload-zone" id="drop-zone">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                    <p class="lang" data-es="Arrastra tu archivo Master (.wav, .mp3)" data-en="Drag your Master file">Arrastra tu archivo Master (.wav, .mp3)</p>
+                    <input type="file" id="track-file" accept="audio/*" style="display:none;">
+                </div>
+                
+                <form class="upload-form" id="upload-track-form">
+                    <div class="input-wrapper">
+                        <label style="font-size:12px;">Título de la Pista</label>
+                        <input type="text" id="track-title" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <label style="font-size:12px;">Género</label>
+                        <select id="track-genre">
+                            <option>Electrónica</option><option>Rock</option><option>Cinematic</option><option>Urbano</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper checkbox-wrapper" style="margin-top:5px;">
+                        <input type="checkbox" id="track-public">
+                        <label for="track-public" class="lang" data-es="Hacer público en el catálogo global" data-en="Make public in global catalog">Hacer público en el catálogo global</label>
+                    </div>
+                    <button type="submit" class="btn-submit lang" data-es="Enviar a Revisión" data-en="Submit for Review">Enviar a Revisión</button>
+                </form>
+            </div>
+
+            <div id="view-catalog" class="dashboard-view">
+                <h2 class="lang" data-es="Mi Catálogo Privado" data-en="My Private Catalog">Mi Catálogo Privado</h2>
+                <div id="user-track-list" class="catalog-grid" style="max-width:100%; margin-top:10px;"></div>
+            </div>
+
+            <div id="view-settings" class="dashboard-view">
+                <h2 class="lang" data-es="Ajustes y Mejoras" data-en="Settings & Upgrades">Ajustes y Mejoras</h2>
+                <div class="upload-form" style="max-width:400px;">
+                    <h3 class="lang" data-es="Cambiar Foto de Perfil" data-en="Change Profile Pic">Cambiar Foto de Perfil</h3>
+                    <input type="file" id="profile-pic-input" accept="image/*">
+                    <button class="btn-table-action" id="save-pic-btn" style="margin-top:10px;">Guardar Foto</button>
+                </div>
+
+                <div class="upload-form" style="max-width:400px; border-color:#a855f7;">
+                    <h3 style="color:#a855f7;">Mejorar a Plan Pro</h3>
+                    <p style="font-size:12px;">Desbloquea estadísticas y elimina restricciones. $8 USD.</p>
+                    <div class="payment-grid" style="grid-template-columns: 1fr;">
+                        <input type="text" placeholder="Titular de la tarjeta">
+                        <input type="text" placeholder="Número de Tarjeta" maxlength="16">
+                        <div style="display:flex; gap:10px;">
+                            <input type="text" placeholder="MM/AA" maxlength="5">
+                            <input type="text" placeholder="CVV" maxlength="3">
+                        </div>
+                    </div>
+                    <button class="btn-submit" id="upgrade-to-premium-btn">Pagar y Mejorar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

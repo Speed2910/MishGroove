@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mishgroove - Admin</title>
+    <link rel="stylesheet" href="styles.css">
+    <link id="favicon" rel="icon" type="image/png" href="icon/Claro/favicon-128x128.png">
+    <!-- Librería Chart.js para estadísticas e insights globales -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="theme-oscuro">
+    <div class="glass-dashboard-container">
+        <aside class="db-sidebar">
+            <div class="db-brand"><span class="brand-name">Admin Control</span></div>
+            <nav class="db-menu">
+                <button class="menu-item active tab-trigger" data-target="view-validation"><span>Validación Tracks</span></button>
+                <button class="menu-item tab-trigger" data-target="view-all-tracks"><span>Catálogo Completo</span></button>
+                <button class="menu-item tab-trigger" data-target="view-users"><span>Gestión Usuarios</span></button>
+                <button class="menu-item tab-trigger" data-target="view-del-reqs"><span>Eliminación Tracks</span></button>
+                <button class="menu-item tab-trigger" data-target="view-claims"><span>Tickets Soporte</span></button>
+                <button class="menu-item tab-trigger" data-target="view-services"><span>Gestión y Calendario Reservas</span></button>
+                <button class="menu-item tab-trigger" data-target="view-global-stats"><span>Insights Globales</span></button>
+            </nav>
+            
+            <div class="sidebar-controls-footer">
+                <div class="dropdown-container">
+                    <button class="theme-circle-btn" id="theme-menu-btn">T</button>
+                    <div class="dropdown-menu" id="theme-menu">
+                        <div class="dropdown-item" data-theme="0">Claro</div>
+                        <div class="dropdown-item" data-theme="1">Alt</div>
+                        <div class="dropdown-item" data-theme="2">Oscuro</div>
+                    </div>
+                </div>
+                <button class="logout-btn-text btn-table-action btn-danger" style="width:100%; margin-top:15px; padding:10px; font-weight:bold; font-size:14px; display:block; text-align:center;">Cerrar Sesión</button>
+            </div>
+        </aside>
+
+        <main class="db-main-content">
+            <header class="db-topbar">
+                <div class="topbar-welcome"><h1>Panel Global Administrador</h1></div>
+            </header>
+
+            <div id="view-validation" class="dashboard-view active">
+                <h2>Pistas Pendientes</h2>
+                <div class="catalog-grid" id="admin-pending-list" style="grid-template-columns: 1fr;"></div>
+            </div>
+
+            <div id="view-all-tracks" class="dashboard-view">
+                <h2>Todas las pistas</h2>
+                <div class="catalog-grid" id="admin-all-tracks-list"></div>
+            </div>
+
+            <div id="view-users" class="dashboard-view">
+                <h2>Usuarios</h2>
+                <div class="upload-form" id="admin-user-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+            </div>
+
+            <div id="view-del-reqs" class="dashboard-view">
+                <h2>Solicitudes de Eliminación (De Usuarios)</h2>
+                <div id="admin-del-requests-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+            </div>
+
+            <div id="view-claims" class="dashboard-view">
+                <h2>Tickets de Soporte (Pro/Signature)</h2>
+                <div id="admin-claims-list" class="chat-container"></div>
+            </div>
+
+            <!-- Panel de Reservas Combinado -->
+            <div id="view-services" class="dashboard-view">
+                <h2>Solicitudes de Reserva (Calendario)</h2>
+                <div id="admin-reservations-list" style="display:flex; flex-direction:column; gap:10px; margin-bottom:30px;"></div>
+
+                <h2>Agregar Nuevo Instrumento o Estudio</h2>
+                <form class="upload-form" id="add-service-form" style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px; max-width:500px; padding:15px; border:1px solid var(--glass-border); border-radius:12px;">
+                    <input type="text" id="sv-name" class="input-wrapper" placeholder="Nombre (Ej: Batería Pearl)" required>
+                    <select id="sv-type" class="input-wrapper" style="padding:10px; border-radius:5px;"><option>Instrumento</option><option>Estudio</option></select>
+                    <input type="text" id="sv-location" class="input-wrapper" placeholder="Ubicación" required>
+                    <input type="text" id="sv-schedule" class="input-wrapper" placeholder="Horario Disponible" required>
+                    <input type="number" id="sv-price" class="input-wrapper" placeholder="Precio ($)" required>
+                    <input type="url" id="sv-image" class="input-wrapper" placeholder="URL Imagen" required>
+                    <button type="submit" class="btn-submit">Agregar Servicio</button>
+                </form>
+                <div id="admin-services-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+            </div>
+
+            <!-- Vista de Estadísticas para Admin con Gráficas Funcionales -->
+            <div id="view-global-stats" class="dashboard-view">
+                <div class="stats-header-bar">
+                    <h2>Insights Financieros Globales</h2>
+                    <span class="live-badge">📊 Módulo Admin</span>
+                </div>
+
+                <section class="db-metrics-grid">
+                    <div class="metric-card violet-gradient">
+                        <div class="card-head">Ingresos Totales Plataforma</div>
+                        <h2 id="admin-total-revenue">$0.00</h2>
+                        <span class="metric-subtext">Suscripciones + Streamings + Reservas</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-head">Escuchas Globales</div>
+                        <h2 id="admin-total-listens">0</h2>
+                        <span class="metric-subtext">Reproducciones registradas</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-head">Usuarios Activos</div>
+                        <h2 id="admin-total-users">0</h2>
+                        <span class="metric-subtext">Planes Essential, Pro y Signature</span>
+                    </div>
+                    <div class="metric-card">
+                        <div class="card-head">Recaudación Suscripciones</div>
+                        <h2 id="admin-sub-revenue">$0.00</h2>
+                        <span class="metric-subtext">Planes Pro ($8/mes)</span>
+                    </div>
+                </section>
+
+                <!-- Gráficas de Análisis Global -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <h3>Crecimiento Financiero Global ($)</h3>
+                            <span class="chart-period">Histórico Semanal</span>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="admin-financial-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <h3>Distribución por Fuente de Ingreso</h3>
+                            <span class="chart-period">Ecosistema Mishgroove</span>
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas id="admin-sources-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumen de Fuentes de Ingreso -->
+                <div class="financial-breakdown-section">
+                    <h3>Resumen Financiero por División</h3>
+                    <div class="table-responsive">
+                        <table class="financial-table">
+                            <thead>
+                                <tr>
+                                    <th>División</th>
+                                    <th>Métrica Base</th>
+                                    <th>Tarifa / Valor</th>
+                                    <th>Total Generado</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-financial-table-body">
+                                <tr>
+                                    <td colspan="5" style="text-align:center;">Calculando resumen financiero...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
