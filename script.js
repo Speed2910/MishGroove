@@ -9,7 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ================= BASE DE DATOS LOCALSTORAGE =================
     if (!localStorage.getItem('mg_users')) {
-        localStorage.setItem('mg_users', JSON.stringify([{name: "Admin", email: "admin@mg.com", password: "123", role: "administrador"}]));
+        localStorage.setItem('mg_users', JSON.stringify([
+            {name: "Admin", email: "admin@mg.com", password: "123", role: "administrador"},
+            // Añadir usuarios de ejemplo con redes sociales para la demo del index
+            {name: "Neon Pulse", email: "neon@pulse.com", password: "123", role: "cliente-+"},
+            {name: "The Velvet Sounds", email: "velvet@sounds.com", password: "123", role: "cliente-p", socials: { youtube: 'https://youtube.com', spotify: 'https://spotify.com' }},
+            {name: "Echoes of Jupiter", email: "echoes@jupiter.com", password: "123", role: "cliente-+"}
+        ]));
     }
     if (!localStorage.getItem('mg_tracks')) {
         localStorage.setItem('mg_tracks', JSON.stringify([{id: 1, title: "Nebula Drive", genre: "Electrónica", artist: "Neon Pulse", uploaderEmail: "admin@mg.com", audioData: "", status: "aprobado", isPublic: true, plays: 1500}]));
@@ -19,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!localStorage.getItem('mg_del_requests')) localStorage.setItem('mg_del_requests', JSON.stringify([])); 
     if (!localStorage.getItem('mg_reservations')) localStorage.setItem('mg_reservations', JSON.stringify([]));
 
+    if (!localStorage.getItem('mg_subscription_payments')) localStorage.setItem('mg_subscription_payments', JSON.stringify([]));
     if (!localStorage.getItem('mg_services_catalog')) {
         localStorage.setItem('mg_services_catalog', JSON.stringify([
             {id: 1, name: "Estudio A (Voces)", type: "Estudio", location: "Sede Central", schedule: "L-V 09:00 - 18:00", price: 50, image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400"},
@@ -31,6 +38,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveDB = (key, data) => localStorage.setItem(key, JSON.stringify(data));
     
     let currentUser = JSON.parse(sessionStorage.getItem('mg_current_user'));
+
+    // ================= SISTEMA DE SONIDO UI =================
+    // Pre-cargamos los sonidos desde la carpeta 'click' para una respuesta instantánea.
+    const uiClickSounds = [
+        new Audio('click/click1.wav'),
+        new Audio('click/click2.wav')
+    ];
+    uiClickSounds.forEach(sound => sound.preload = 'auto'); // Sugerir al navegador que los cargue
+    let lastSoundIndex = -1;
+
+    const playUINavSound = () => {
+        // Elegir un sonido diferente al anterior para que se sienta variado.
+        let soundIndex = Math.floor(Math.random() * uiClickSounds.length);
+        if (uiClickSounds.length > 1 && soundIndex === lastSoundIndex) {
+            soundIndex = (soundIndex + 1) % uiClickSounds.length;
+        }
+        lastSoundIndex = soundIndex;
+        const soundToPlay = uiClickSounds[soundIndex];
+        soundToPlay.currentTime = 0; // Permite reproducir el sonido rápidamente varias veces.
+        soundToPlay.play().catch(e => {}); // Evita errores en consola si el usuario hace clic muy rápido
+    };
 
     // ================= SISTEMA DE TEMAS E IDIOMAS =================
     const body = document.body;
@@ -131,9 +159,47 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("login-view").classList.remove("active");
             loginModal.classList.add("active");
         });
+
+        // Añadir sonido a los botones de la barra de navegación superior
+        document.querySelectorAll('.pill-right-actions button, .pill-center-controls button').forEach(btn => {
+            btn.addEventListener('click', playUINavSound);
+        });
+        // Añadir sonido a los enlaces de la barra lateral
+        document.querySelectorAll('.sidebar .nav-links a').forEach(link => link.addEventListener('click', playUINavSound));
+
         document.getElementById("close-login-btn")?.addEventListener("click", () => loginModal.classList.remove("active"));
         document.getElementById("go-to-register")?.addEventListener("click", (e) => { e.preventDefault(); document.getElementById("login-view").classList.remove("active"); document.getElementById("register-view").classList.add("active"); });
         document.getElementById("go-to-login")?.addEventListener("click", (e) => { e.preventDefault(); document.getElementById("register-view").classList.remove("active"); document.getElementById("login-view").classList.add("active"); });
+
+        // Lógica para mostrar redes sociales en el index
+        const renderArtistSocials = () => {
+            document.querySelectorAll('.artist-socials').forEach(container => {
+                const artistEmail = container.getAttribute('data-artist-email');
+                if (!artistEmail) return;
+
+                const users = getDB('mg_users');
+                const artist = users.find(u => u.email === artistEmail);
+
+                if (artist && artist.socials) {
+                    let socialHTML = '';
+                    if (artist.socials.youtube) {
+                        socialHTML += `<a href="${artist.socials.youtube}" target="_blank" rel="noopener noreferrer"><img src="https://simpleicons.org/icons/youtube.svg" class="social-icon" alt="YouTube"></a>`;
+                    }
+                    if (artist.socials.instagram) {
+                        socialHTML += `<a href="${artist.socials.instagram}" target="_blank" rel="noopener noreferrer"><img src="https://simpleicons.org/icons/instagram.svg" class="social-icon" alt="Instagram"></a>`;
+                    }
+                    if (artist.socials.spotify) {
+                        socialHTML += `<a href="${artist.socials.spotify}" target="_blank" rel="noopener noreferrer"><img src="https://simpleicons.org/icons/spotify.svg" class="social-icon" alt="Spotify"></a>`;
+                    }
+                    container.innerHTML = socialHTML;
+                }
+            });
+        };
+
+        // Llamar a la función si estamos en index.html
+        if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+            renderArtistSocials();
+        }
 
         let selectedRegRole = 'cliente-np'; 
         const regRoleCards = document.querySelectorAll("#reg-role-selector .role-card");
@@ -142,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 regRoleCards.forEach(c => c.classList.remove("active"));
                 card.classList.add("active");
                 selectedRegRole = card.getAttribute("data-role");
-                document.getElementById("payment-fields").style.display = selectedRegRole === 'cliente-p' ? "grid" : "none";
+                document.getElementById("payment-fields").style.display = selectedRegRole === 'cliente-p' ? "block" : "none";
             });
         });
 
@@ -159,9 +225,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if(users.find(u => u.email === email)) return alert("El correo ya existe");
             
-            users.push({ name: document.getElementById("reg-name").value, email: email, password: document.getElementById("reg-password").value, role: selectedRegRole, dob: document.getElementById("reg-dob").value, profilePic: null });
+            // Si el usuario elige ser Pro, se registra como 'np' y se crea una solicitud de pago.
+            const finalRole = selectedRegRole === 'cliente-p' ? 'cliente-np' : selectedRegRole;
+            users.push({ name: document.getElementById("reg-name").value, email: email, password: document.getElementById("reg-password").value, role: finalRole, dob: document.getElementById("reg-dob").value, profilePic: null, socials: {} });
             saveDB('mg_users', users);
-            alert("Cuenta creada. Inicia sesión.");
+
+            if (selectedRegRole === 'cliente-p') {
+                const payments = getDB('mg_subscription_payments');
+                payments.push({
+                    id: Date.now(),
+                    userEmail: email,
+                    userName: document.getElementById("reg-name").value,
+                    bankName: document.getElementById("reg-bank-name").value,
+                    transactionRef: document.getElementById("reg-transaction-ref").value,
+                    status: 'pendiente'
+                });
+                saveDB('mg_subscription_payments', payments);
+                alert("Cuenta creada. Su pago de suscripción está en proceso, espere hasta 24 horas para su revisión. Puede iniciar sesión con su plan Essential.");
+            } else {
+                alert("Cuenta creada. Inicia sesión.");
+            }
             document.getElementById("go-to-login").click();
         });
 
@@ -255,6 +338,11 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
+        // Añadir sonido a los botones de navegación del dashboard
+        document.querySelectorAll('.db-menu .menu-item, .sidebar-controls-footer button, .btn-promo-upgrade').forEach(btn => {
+            btn.addEventListener('click', playUINavSound);
+        });
+
         document.getElementById("save-pic-btn")?.addEventListener("click", () => {
             const file = document.getElementById("profile-pic-input").files[0];
             if(file) {
@@ -274,6 +362,35 @@ document.addEventListener("DOMContentLoaded", () => {
                 reader.readAsDataURL(file);
             }
         });
+
+        // Lógica para guardar redes sociales
+        const socialsForm = document.getElementById("socials-form");
+        if (socialsForm) {
+            // Rellenar los campos con los datos existentes
+            if (currentUser.socials) {
+                document.getElementById('social-youtube').value = currentUser.socials.youtube || '';
+                document.getElementById('social-instagram').value = currentUser.socials.instagram || '';
+                document.getElementById('social-spotify').value = currentUser.socials.spotify || '';
+            }
+
+            socialsForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const socials = {
+                    youtube: document.getElementById('social-youtube').value,
+                    instagram: document.getElementById('social-instagram').value,
+                    spotify: document.getElementById('social-spotify').value,
+                };
+
+                currentUser.socials = socials;
+                sessionStorage.setItem('mg_current_user', JSON.stringify(currentUser));
+
+                const users = getDB('mg_users');
+                const userIndex = users.findIndex(u => u.email === currentUser.email);
+                if (userIndex !== -1) users[userIndex].socials = socials;
+                saveDB('mg_users', users);
+                alert("Redes sociales actualizadas.");
+            });
+        }
 
         // ================= CÁLCULOS E INSIGHTS FINANCIEROS (ARTISTA) =================
         const calculateUserStats = () => {
@@ -657,7 +774,125 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Solicitud enviada a revisión técnica."); e.target.reset();
         });
 
-        renderUserTracks(); calculateUserStats(); renderUserClaims(); renderCatalogServices(); renderCart();
+        // Lógica para el formulario de mejora a Pro desde el dashboard
+        document.getElementById("upgrade-to-pro-form")?.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (!currentUser) return alert("Debes iniciar sesión.");
+
+            const bankName = document.getElementById("upgrade-bank-name").value;
+            const transactionRef = document.getElementById("upgrade-transaction-ref").value;
+
+            const payments = getDB('mg_subscription_payments');
+            payments.push({
+                id: Date.now(),
+                userEmail: currentUser.email,
+                userName: currentUser.name,
+                bankName: bankName,
+                transactionRef: transactionRef,
+                status: 'pendiente'
+            });
+            saveDB('mg_subscription_payments', payments);
+            alert("¡Gracias! Su pago de suscripción está en proceso. Espere hasta 24 horas para su revisión. El panel se recargará.");
+            window.location.reload();
+        });
+
+        // ================= LÓGICA DEL METRÓNOMO =================
+        const bpmDisplay = document.getElementById('metronome-bpm-display');
+        const knob = document.getElementById('metronome-knob');
+        const slider = document.getElementById('metronome-slider'); // Para la lógica antigua
+        const startStopBtn = document.getElementById('metronome-start-stop-btn');
+        const led = document.querySelector('.metronome-led');
+        const signatureBtn = document.getElementById('metronome-signature-btn');
+
+        let bpm = 120;
+        let timerId = null;
+        let beatCount = 0;
+        const signatures = [[4, 4], [3, 4], [2, 4], [6, 8]];
+        let signatureIndex = 0;
+
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Lógica unificada para el tick del metrónomo
+        const playTick = (isAccent) => {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(isAccent ? 980 : 780, audioContext.currentTime);
+            gainNode.gain.setValueAtTime(isAccent ? 1.0 : 0.6, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.1);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 0.1);
+
+            led?.classList.add('active');
+            if (isAccent) led?.classList.add('accent');
+            setTimeout(() => {
+                led?.classList.remove('active');
+                led?.classList.remove('accent');
+            }, 100);
+        };
+
+        const metronomeLoop = () => {
+            const [beats] = signatures[signatureIndex];
+            const isAccent = beatCount % beats === 0;
+            playTick(isAccent);
+            beatCount++;
+        };
+
+        const updateMetronome = () => {
+            if (bpmDisplay) bpmDisplay.textContent = bpm;
+            if (knob) {
+                const rotation = ((bpm - 40) / 200) * 270 - 135;
+                knob.style.transform = `rotate(${rotation}deg)`;
+            }
+            if (slider) slider.value = bpm;
+        };
+
+        let isRunning = false; // Estado del metrónomo
+        knob?.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            if (isRunning) { // Si está corriendo, detenemos el loop para evitar bugs al cambiar BPM
+                clearInterval(timerId);
+            }
+            const startX = e.clientX;
+            const startBPM = bpm;
+            const onMouseMove = (moveEvent) => {
+                const diffX = moveEvent.clientX - startX;
+                bpm = Math.round(Math.max(40, Math.min(240, startBPM + diffX * 0.5))); // Ajusta la sensibilidad
+                updateMetronome(); // Actualiza solo la parte visual (número y rotación)
+            };
+            const onMouseUp = () => {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+                // Solo cuando se suelta el clic, se reanuda el loop con el BPM final
+                if (isRunning) { 
+                    timerId = setInterval(metronomeLoop, (60 / bpm) * 1000);
+                }
+            };
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp);
+        });
+
+        // Se elimina la lógica de los botones +/- y el slider que ya no se usan en essential.html
+
+        startStopBtn?.addEventListener('click', () => {
+            isRunning = !isRunning;
+            startStopBtn.textContent = isRunning ? 'Detener' : 'Iniciar';
+            if (isRunning) { beatCount = 0; metronomeLoop(); timerId = setInterval(metronomeLoop, (60 / bpm) * 1000); } 
+            else { clearInterval(timerId); beatCount = 0; }
+        });
+
+        signatureBtn?.addEventListener('click', () => {
+            signatureIndex = (signatureIndex + 1) % signatures.length;
+            signatureBtn.textContent = `Compás: ${signatures[signatureIndex].join('/')}`;
+            if (isRunning) { // Reiniciar el conteo si el compás cambia mientras corre
+                beatCount = 0;
+            }
+        });
+
+        renderUserTracks(); calculateUserStats(); renderUserClaims(); renderCatalogServices(); renderCart(); updateMetronome();
     }
 
     // ================= LOGICA ADMINISTRADOR =================
@@ -676,6 +911,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     renderAdminStats();
                 }
             });
+        });
+
+        // Añadir sonido a los botones de navegación del dashboard de Admin
+        document.querySelectorAll('.db-menu .menu-item, .sidebar-controls-footer button').forEach(btn => {
+            btn.addEventListener('click', playUINavSound);
         });
 
         const renderAdminTracks = () => {
@@ -769,8 +1009,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const items = getDB('mg_services_catalog');
             document.getElementById("admin-services-list").innerHTML = items.map(i => `
                 <div class="admin-track-item">
-                    <strong>${i.name} (${i.type})</strong> - $${i.price}
-                    <button class="btn-table-action btn-danger" style="float:right;" onclick="window.delService(${i.id})">Quitar</button>
+                    <span><strong>${i.name} (${i.type})</strong> - $${i.price}</span>
+                    <button class="btn-table-action btn-danger" onclick="window.delService(${i.id})">Quitar</button>
                 </div>
             `).join('');
         };
@@ -789,7 +1029,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ${r.status === 'pendiente' ? `
                     <div class="admin-actions">
                         <button class="btn-table-action btn-success" onclick="window.updateReservation(${r.id}, 'aceptada')">Aceptar Fecha</button>
-                        <button class="btn-table-action btn-danger" onclick="window.updateReservation(${r.id}, 'rechazada')">Declinar</button>
+                        <button class="btn-danger" onclick="window.updateReservation(${r.id}, 'rechazada')">Declinar</button>
                     </div>` : `<div><span class="track-badge">${r.status.toUpperCase()}</span></div>`}
                 </div>
             `).join('') : '<p style="font-size:14px; opacity:0.7;">No hay solicitudes de reserva en el calendario.</p>';
@@ -801,6 +1041,50 @@ document.addEventListener("DOMContentLoaded", () => {
             if(item) item.status = status;
             saveDB('mg_reservations', res);
             renderAdminReservations();
+        };
+
+        const renderSubscriptionPayments = () => {
+            const list = document.getElementById("admin-payments-list");
+            if (!list) return;
+            const payments = getDB('mg_subscription_payments');
+
+            const statusStyles = {
+                pendiente: 'background:#f59e0b; color:#fff;',
+                aceptado: 'background:#22c55e; color:#fff;',
+                rechazado: 'background:#ef4444; color:#fff;'
+            };
+
+            list.innerHTML = payments.length ? payments.map(p => `
+                <div class="admin-track-item">
+                    <div>
+                        <strong>Usuario:</strong> ${p.userName} (${p.userEmail})<br>
+                        <strong>Banco:</strong> ${p.bankName} | <strong>Ref:</strong> ${p.transactionRef}<br>
+                        <span class="track-badge" style="${statusStyles[p.status]}">ESTADO: ${p.status.toUpperCase()}</span>
+                    </div>
+                    ${p.status === 'pendiente' ? `
+                    <div class="admin-actions">
+                        <button class="btn-table-action btn-success" onclick="window.resolvePayment(${p.id}, 'aceptado')">Aceptar</button>
+                        <button class="btn-table-action btn-danger" onclick="window.resolvePayment(${p.id}, 'rechazado')">Rechazar</button>
+                    </div>` : ''}
+                </div>
+            `).join('') : '<p>No hay pagos de suscripción pendientes.</p>';
+        };
+
+        window.resolvePayment = (paymentId, newStatus) => {
+            const payments = getDB('mg_subscription_payments');
+            const payment = payments.find(p => p.id === paymentId);
+            if (!payment) return;
+
+            payment.status = newStatus;
+            if (newStatus === 'aceptado') {
+                const users = getDB('mg_users');
+                const user = users.find(u => u.email === payment.userEmail);
+                if (user) user.role = 'cliente-p';
+                saveDB('mg_users', users);
+            }
+            saveDB('mg_subscription_payments', payments);
+            renderSubscriptionPayments();
+            renderAdminUsers(); // Actualiza la lista de usuarios para ver el cambio de rol
         };
 
         // ================= CÁLCULOS E INSIGHTS FINANCIEROS (ADMIN) =================
@@ -926,7 +1210,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         window.delService = (id) => { saveDB('mg_services_catalog', getDB('mg_services_catalog').filter(i => i.id !== id)); renderAdminServices(); };
 
-        renderAdminTracks(); renderAdminUsers(); renderAdminDelReqs(); renderAdminClaims(); renderAdminServices(); renderAdminReservations(); renderAdminStats();
+        renderAdminTracks(); renderAdminUsers(); renderAdminDelReqs(); renderAdminClaims(); renderAdminServices(); renderAdminReservations(); renderAdminStats(); renderSubscriptionPayments();
     }
 
     document.querySelectorAll(".logout-btn-text").forEach(btn => btn.addEventListener("click", () => {

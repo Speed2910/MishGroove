@@ -26,6 +26,10 @@
                     <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
                     <span class="lang" data-es="Mi Catálogo" data-en="My Catalog">Mi Catálogo</span>
                 </button>
+                <button class="menu-item tab-trigger" data-target="view-tools">
+                    <svg viewBox="0 0 24 24"><path d="M3 16.5v-3l8-8 3 3-8 8h-3zM18 7.5l3 3-8 8h-3v-3l8-8z"></path></svg>
+                    <span>Herramientas</span>
+                </button>
                 <p class="menu-category lang" data-es="Cuenta" data-en="Account">Cuenta</p>
                 <button class="menu-item tab-trigger" data-target="view-settings">
                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15..."></path></svg>
@@ -141,6 +145,25 @@
                 <div id="user-track-list" class="catalog-grid" style="max-width:100%; margin-top:10px;"></div>
             </div>
 
+            <!-- Vista de Herramientas (Metrónomo) -->
+            <div id="view-tools" class="dashboard-view">
+                <h2>Metrónomo Digital</h2>
+                <div class="metronome-container">
+                    <div class="metronome-knob-container">
+                        <div class="knob" id="metronome-knob"></div>
+                    </div>
+                    <div class="metronome-main-panel">
+                        <div class="metronome-display">
+                            <div class="metronome-led"></div>
+                            <span id="metronome-bpm-display">120</span>
+                            <span class="bpm-label">BPM</span>
+                        </div>
+                        <button class="btn-table-action" id="metronome-signature-btn" style="margin-top: 15px;">Compás: 4/4</button>
+                        <button class="btn-submit" id="metronome-start-stop-btn" style="width: 100%; margin-top: 15px;">Iniciar</button>
+                    </div>
+                </div>
+            </div>
+
             <div id="view-settings" class="dashboard-view">
                 <h2 class="lang" data-es="Ajustes y Mejoras" data-en="Settings & Upgrades">Ajustes y Mejoras</h2>
                 <div class="upload-form" style="max-width:400px;">
@@ -149,19 +172,41 @@
                     <button class="btn-table-action" id="save-pic-btn" style="margin-top:10px;">Guardar Foto</button>
                 </div>
 
-                <div class="upload-form" style="max-width:400px; border-color:#a855f7;">
-                    <h3 style="color:#a855f7;">Mejorar a Plan Pro</h3>
-                    <p style="font-size:12px;">Desbloquea estadísticas y elimina restricciones. $8 USD.</p>
-                    <div class="payment-grid" style="grid-template-columns: 1fr;">
-                        <input type="text" placeholder="Titular de la tarjeta">
-                        <input type="text" placeholder="Número de Tarjeta" maxlength="16">
-                        <div style="display:flex; gap:10px;">
-                            <input type="text" placeholder="MM/AA" maxlength="5">
-                            <input type="text" placeholder="CVV" maxlength="3">
-                        </div>
+                <!-- Formulario de Redes Sociales -->
+                <form id="socials-form" class="upload-form" style="max-width:400px; margin-top: 30px;">
+                    <h3>Redes Sociales</h3>
+                    <div class="input-wrapper">
+                        <input type="url" id="social-youtube" placeholder="Link a tu canal de YouTube">
                     </div>
-                    <button class="btn-submit" id="upgrade-to-premium-btn">Pagar y Mejorar</button>
-                </div>
+                    <div class="input-wrapper">
+                        <input type="url" id="social-instagram" placeholder="Link a tu perfil de Instagram">
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="url" id="social-spotify" placeholder="Link a tu perfil de Spotify">
+                    </div>
+                    <button type="submit" class="btn-submit">Guardar Redes</button>
+                </form>
+
+                <!-- Formulario de Mejora a Pro con Pago por Transferencia -->
+                <form id="upgrade-to-pro-form" class="upload-form" style="max-width: 550px; margin-top: 30px; border-color: var(--btn-primary-start);">
+                    <h3 style="color: var(--btn-primary-start);">Mejorar a Plan Pro ($8)</h3>
+                    <div style="font-size:13px; line-height:1.6; background:var(--input-bg); padding:15px; border-radius:12px; border:1px solid var(--glass-border); margin-bottom: 20px;">
+                        <strong>Datos para Transferencia Bancaria:</strong><br>
+                        <span>- Banco: Banco de Venezuela</span><br>
+                        <span>- C.I: V-27.765.432</span><br>
+                        <span>- Teléfono: 0412-1234567</span><br>
+                        <span>- Concepto: Pago Mishgroove</span>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                        <div class="input-wrapper">
+                           <input type="text" id="upgrade-bank-name" placeholder="Banco desde el que pagó" required>
+                        </div>
+                        <div class="input-wrapper">
+                           <input type="text" id="upgrade-transaction-ref" placeholder="Nº de Referencia del pago" required>
+                        </div>
+                        <button type="submit" class="btn-submit" style="margin-top:5px;">Enviar Comprobante de Pago</button>
+                    </div>
+                </form>
             </div>
         </main>
     </div>

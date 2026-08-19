@@ -136,6 +136,7 @@
                             <div><strong>120K</strong><br>Oyentes</div>
                             <div><strong style="color: var(--btn-primary-start);">Signature</strong><br>Status</div>
                         </div>
+                        <div class="artist-socials" data-artist-email="neon@pulse.com"></div>
                     </div>
                     <div class="artist-card">
                         <img src="https://images.unsplash.com/photo-1507214152479-793a86c026a7?w=200" alt="The Velvet Sounds">
@@ -145,6 +146,7 @@
                             <div><strong>85K</strong><br>Oyentes</div>
                             <div><strong>Pro</strong><br>Status</div>
                         </div>
+                        <div class="artist-socials" data-artist-email="velvet@sounds.com"></div>
                     </div>
                     <div class="artist-card">
                         <img src="https://images.unsplash.com/photo-1559466193-6157500a87e0?w=200" alt="Echoes of Jupiter">
@@ -154,6 +156,7 @@
                             <div><strong>210K</strong><br>Oyentes</div>
                             <div><strong style="color: var(--btn-primary-start);">Signature</strong><br>Status</div>
                         </div>
+                        <div class="artist-socials" data-artist-email="echoes@jupiter.com"></div>
                     </div>
                 </div>
             </section>
@@ -231,13 +234,23 @@
                             <label for="reg-dob" style="font-size: 11px; font-weight: bold; display: block; margin-bottom: 5px;" class="lang" data-es="Fecha de Nacimiento" data-en="Date of Birth">Fecha de Nacimiento</label>
                             <input type="date" id="reg-dob" required>
                         </div>
-                        <div id="payment-fields" style="display: none;">
-                            <p style="font-size:11px; margin-bottom:8px; font-weight:bold;">Suscripción Pro: $8 (Aprox 4.941,04 VES)</p>
-                            <div class="payment-grid">
-                                <input type="text" placeholder="Titular de la tarjeta" class="col-span-2">
-                                <input type="text" placeholder="Número de Tarjeta (16 dígitos)" class="col-span-2" maxlength="16">
-                                <input type="text" placeholder="MM/AA" maxlength="5">
-                                <input type="text" placeholder="CVV" maxlength="3">
+                        <!-- Nuevo Flujo de Pago por Transferencia -->
+                        <div id="payment-fields" style="display: none; background: rgba(0,0,0,0.05); padding: 15px; border-radius: 12px; border: 1px solid var(--glass-border); margin-bottom: 15px;">
+                            <p style="font-size:13px; margin-top:0; font-weight:bold;">Pagar Suscripción Pro: $8</p>
+                            <div style="font-size:12px; line-height:1.6; background:var(--input-bg); padding:10px; border-radius:8px;">
+                                <strong>Datos para Transferencia Bancaria:</strong><br>
+                                <span>- Banco: Banco de Venezuela</span><br>
+                                <span>- C.I: V-27.765.432</span><br>
+                                <span>- Teléfono: 0412-1234567</span><br>
+                                <span>- Concepto: Pago Mishgroove</span>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                                <div class="input-wrapper">
+                                    <input type="text" id="reg-bank-name" placeholder="Banco desde el que pagó" required>
+                                </div>
+                                <div class="input-wrapper">
+                                    <input type="text" id="reg-transaction-ref" placeholder="Nº de Referencia del pago" required>
+                                </div>
                             </div>
                         </div>
                         <div class="input-wrapper" style="margin-bottom: 15px;">

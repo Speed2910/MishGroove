@@ -44,10 +44,17 @@
             </nav>
 
             <div class="sidebar-promo-card">
+            <div class="sidebar-promo-card" id="promo-signature">
                 <div class="promo-icon">✦</div>
                 <h4>Solicitar Signature</h4>
                 <p style="font-size:11px;">Monetización avanzada.</p>
                 <button class="btn-promo-upgrade tab-trigger" data-target="view-request-plus">Aplicar</button>
+            </div>
+            <div class="sidebar-promo-card" id="promo-pro" style="display:none;">
+                <div class="promo-icon" style="color: var(--btn-primary-start);">●</div>
+                <h4>Mejorar a Pro</h4>
+                <p style="font-size:11px;">Desbloquea estadísticas y reservas.</p>
+                <button class="btn-promo-upgrade tab-trigger" data-target="view-upgrade-pro">Pagar $8</button>
             </div>
             
             <div class="sidebar-controls-footer">
@@ -206,12 +213,40 @@
 
             <!-- Vista de Herramientas/Descargas -->
             <div id="view-tools" class="dashboard-view">
-                <h2>Herramientas Adicionales</h2>
-                <div class="upload-form" style="max-width:500px;">
-                    <h3>Descargar Metrónomo MTM</h3>
-                    <p style="font-size:14px; margin-bottom:20px;">Descarga nuestro metrónomo de escritorio para mantener el tempo perfecto en tus sesiones.</p>
-                    <a href="mtm/mtm.exe" download="mtm.exe" class="btn-submit" style="text-decoration: none; text-align: center; display: block;">Descargar MTM (.exe)</a>
+                <h2>Metrónomo Digital</h2>
+                <div class="metronome-container">
+                    <div class="metronome-knob-container">
+                        <div class="knob" id="metronome-knob"></div>
+                    </div>
+                    <div class="metronome-main-panel">
+                        <div class="metronome-display">
+                            <div class="metronome-led"></div>
+                            <span id="metronome-bpm-display">120</span>
+                            <span class="bpm-label">BPM</span>
+                        </div>
+                        <button class="btn-table-action" id="metronome-signature-btn" style="margin-top: 15px;">Compás: 4/4</button>
+                        <button class="btn-submit" id="metronome-start-stop-btn" style="width: 100%; margin-top: 15px;">Iniciar</button>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Vista para Mejorar a Pro (para usuarios Essential) -->
+            <div id="view-upgrade-pro" class="dashboard-view">
+                <h2>Pagar Suscripción Pro: $8</h2>
+                <form id="upgrade-to-pro-form" class="upload-form" style="max-width: 550px;">
+                    <div style="font-size:13px; line-height:1.6; background:var(--input-bg); padding:15px; border-radius:12px; border:1px solid var(--glass-border); margin-bottom: 20px;">
+                        <strong>Datos para Transferencia Bancaria:</strong><br>
+                        <span>- Banco: Banco de Venezuela</span><br>
+                        <span>- C.I: V-27.765.432</span><br>
+                        <span>- Teléfono: 0412-1234567</span><br>
+                        <span>- Concepto: Pago Mishgroove</span>
+                    </div>
+                    <div class="payment-grid" style="padding:0; background:transparent; border:none; grid-template-columns: 1fr;">
+                        <input type="text" id="upgrade-bank-name" placeholder="Banco desde el que pagó" class="col-span-2" required>
+                        <input type="text" id="upgrade-transaction-ref" placeholder="Nº de Referencia del pago" class="col-span-2" required>
+                    </div>
+                    <button type="submit" class="btn-submit" style="margin-top:15px;">Enviar Comprobante de Pago</button>
+                </form>
             </div>
 
             <div id="view-request-plus" class="dashboard-view">
@@ -232,6 +267,21 @@
                     <input type="file" id="profile-pic-input" accept="image/*">
                     <button class="btn-table-action" id="save-pic-btn" style="margin-top:10px;">Guardar Foto</button>
                 </div>
+
+                <!-- Formulario de Redes Sociales -->
+                <form id="socials-form" class="upload-form" style="max-width:400px; margin-top: 30px;">
+                    <h3>Redes Sociales</h3>
+                    <div class="input-wrapper">
+                        <input type="url" id="social-youtube" placeholder="Link a tu canal de YouTube">
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="url" id="social-instagram" placeholder="Link a tu perfil de Instagram">
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="url" id="social-spotify" placeholder="Link a tu perfil de Spotify">
+                    </div>
+                    <button type="submit" class="btn-submit">Guardar Redes</button>
+                </form>
             </div>
         </main>
     </div>

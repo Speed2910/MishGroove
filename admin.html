@@ -14,13 +14,14 @@
         <aside class="db-sidebar">
             <div class="db-brand"><span class="brand-name">Admin Control</span></div>
             <nav class="db-menu">
-                <button class="menu-item active tab-trigger" data-target="view-validation"><span>Validación Tracks</span></button>
+                <button class="menu-item active tab-trigger" data-target="view-global-stats"><span>Insights Globales</span></button>
+                <button class="menu-item tab-trigger" data-target="view-validation"><span>Validación Tracks</span></button>
                 <button class="menu-item tab-trigger" data-target="view-all-tracks"><span>Catálogo Completo</span></button>
                 <button class="menu-item tab-trigger" data-target="view-users"><span>Gestión Usuarios</span></button>
                 <button class="menu-item tab-trigger" data-target="view-del-reqs"><span>Eliminación Tracks</span></button>
                 <button class="menu-item tab-trigger" data-target="view-claims"><span>Tickets Soporte</span></button>
                 <button class="menu-item tab-trigger" data-target="view-services"><span>Gestión y Calendario Reservas</span></button>
-                <button class="menu-item tab-trigger" data-target="view-global-stats"><span>Insights Globales</span></button>
+                <button class="menu-item tab-trigger" data-target="view-subscription-payments"><span>Pagos de Suscripción</span></button>
             </nav>
             
             <div class="sidebar-controls-footer">
@@ -41,7 +42,7 @@
                 <div class="topbar-welcome"><h1>Panel Global Administrador</h1></div>
             </header>
 
-            <div id="view-validation" class="dashboard-view active">
+            <div id="view-validation" class="dashboard-view">
                 <h2>Pistas Pendientes</h2>
                 <div class="catalog-grid" id="admin-pending-list" style="grid-template-columns: 1fr;"></div>
             </div>
@@ -72,20 +73,37 @@
                 <div id="admin-reservations-list" style="display:flex; flex-direction:column; gap:10px; margin-bottom:30px;"></div>
 
                 <h2>Agregar Nuevo Instrumento o Estudio</h2>
-                <form class="upload-form" id="add-service-form" style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px; max-width:500px; padding:15px; border:1px solid var(--glass-border); border-radius:12px;">
-                    <input type="text" id="sv-name" class="input-wrapper" placeholder="Nombre (Ej: Batería Pearl)" required>
-                    <select id="sv-type" class="input-wrapper" style="padding:10px; border-radius:5px;"><option>Instrumento</option><option>Estudio</option></select>
-                    <input type="text" id="sv-location" class="input-wrapper" placeholder="Ubicación" required>
-                    <input type="text" id="sv-schedule" class="input-wrapper" placeholder="Horario Disponible" required>
-                    <input type="number" id="sv-price" class="input-wrapper" placeholder="Precio ($)" required>
-                    <input type="url" id="sv-image" class="input-wrapper" placeholder="URL Imagen" required>
+                <form class="upload-form" id="add-service-form" style="display:flex; flex-direction:column; gap:10px; margin-bottom:20px; max-width:500px;">
+                    <div class="input-wrapper">
+                        <input type="text" id="sv-name" placeholder="Nombre (Ej: Batería Pearl)" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <select id="sv-type"><option>Instrumento</option><option>Estudio</option></select>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" id="sv-location" placeholder="Ubicación" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" id="sv-schedule" placeholder="Horario Disponible" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="sv-price" placeholder="Precio ($)" required>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="url" id="sv-image" placeholder="URL Imagen" required>
+                    </div>
                     <button type="submit" class="btn-submit">Agregar Servicio</button>
                 </form>
                 <div id="admin-services-list" style="display:flex; flex-direction:column; gap:10px;"></div>
             </div>
 
+            <div id="view-subscription-payments" class="dashboard-view">
+                <h2>Pagos de Suscripción Pendientes</h2>
+                <div id="admin-payments-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+            </div>
+
             <!-- Vista de Estadísticas para Admin con Gráficas Funcionales -->
-            <div id="view-global-stats" class="dashboard-view">
+            <div id="view-global-stats" class="dashboard-view active">
                 <div class="stats-header-bar">
                     <h2>Insights Financieros Globales</h2>
                     <span class="live-badge">📊 Módulo Admin</span>
@@ -160,6 +178,7 @@
                 </div>
             </div>
         </main>
+
     </div>
     <script src="script.js"></script>
 </body>
